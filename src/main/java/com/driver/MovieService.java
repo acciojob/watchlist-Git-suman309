@@ -3,44 +3,53 @@ package com.driver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MovieService {
-    @Autowired
-    private MovieRepository mr;
 
-    public void addMovie(Movie m){
-        mr.addMovie(m);
+    @Autowired
+    private MovieRepository movieRepository;
+
+    public void addMovie(Movie movie) {
+
+        movieRepository.addMovie(movie);
     }
-    public void addDirector(Director d){
-        mr.addDirector(d);
+
+    public void addDirector(Director director) {
+
+        movieRepository.addDirector(director);
     }
 
     public void addMovieDirectorPair(String movieName, String directorName){
-        mr.addMovieDirectorPair(movieName,directorName);
+        movieRepository.addMovieDirectorPair(movieName, directorName);
     }
 
-    public Movie getMovieByName(String movieName){
-        return mr.getMovieByName(movieName);
-    }
-    public Director getDirectorByName(String directorName){
-        return mr.getDirectorByName(directorName);
+    public Movie findMovieByName(String movieName) {
+        return movieRepository.findMovieByName(movieName);
     }
 
-    public List<String> getMoviesByDirectorName(String directorName){
-        return mr.getMoviesByDirectorName(directorName);
+    public Director findDirectorByName(String directorName) {
+        return movieRepository.findDirectorByName(directorName);
+    }
+
+    public List<String> findMoviesByDirectorName(String directorName) {
+        return movieRepository.findMoviesByDirectorName(directorName);
     }
 
     public List<String> allMoviesList() {
-        return mr.allMoviesList();
+        return movieRepository.allMoviesList();
     }
 
     public void deleteByDirectorName(String directorName) {
-        mr.deleteByDirectorName(directorName);
+        movieRepository.deleteByDirectorName(directorName);
     }
 
     public void deleteAllDirector() {
-        mr.deleteAllDirector();
+        movieRepository.deleteAllDirector();
     }
+
+
 }

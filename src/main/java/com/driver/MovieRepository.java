@@ -2,11 +2,18 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+
 @Repository
 public class MovieRepository {
+
     private HashMap<String, Movie> movieDetails;
+
     private HashMap<String, Director> directorDetails;
+
     private HashMap<String, List<String>> directorMoviePair;
 
     public MovieRepository() {
@@ -14,39 +21,41 @@ public class MovieRepository {
         this.directorDetails = new HashMap<>();
         this.directorMoviePair = new HashMap<>();
     }
-    public void addMovie(Movie m){
-        movieDetails.put(m.getName(),m); //ham name ko get krge GS s & hm me store krge
-    }
-    public void addDirector(Director d){
-        directorDetails.put(d.getName(),d);
-    }
-    public void addMovieDirectorPair(String movieName , String directorName){
-    if(movieDetails.containsKey(movieName) && movieDetails.containsKey(directorName) ){
-        List<String> movieList = new ArrayList<>();
-        if(directorMoviePair.containsKey(directorName)){
-            movieList = directorMoviePair.get(directorName);
-        }
-        movieList.add(movieName);
-        directorMoviePair.put(directorName,movieList);
-    }
+
+    public void addMovie(Movie movie) {
+        movieDetails.put(movie.getName(), movie);
     }
 
-    public Movie getMovieByName(String movieName){
+    public void addDirector(Director director) {
+        directorDetails.put(director.getName(), director);
+    }
+
+    public void addMovieDirectorPair(String movieName, String directorName) {
+        if(movieDetails.containsKey(movieName) && directorDetails.containsKey(directorName)){
+            List<String> movieList = new ArrayList<>();
+            if(directorMoviePair.containsKey(directorName)){
+                movieList = directorMoviePair.get(directorName);
+            }
+            movieList.add(movieName);
+            directorMoviePair.put(directorName, movieList);
+        }
+    }
+
+    public Movie findMovieByName(String movieName) {
         return movieDetails.get(movieName);
     }
 
-    public Director getDirectorByName(String directorName){
+    public Director findDirectorByName(String directorName) {
         return directorDetails.get(directorName);
     }
 
-    public List<String> getMoviesByDirectorName(String directorName){
-        List<String> movieList = new ArrayList<>();
+    public List<String> findMoviesByDirectorName(String directorName) {
+        List<String> moviesList = new ArrayList<>();
         if(directorMoviePair.containsKey(directorName)){
-            movieList = directorMoviePair.get(directorName);
+            moviesList = directorMoviePair.get(directorName);
         }
-        return movieList;
+        return moviesList;
     }
-
 
     public List<String> allMoviesList() {
         List<String> movieList = new ArrayList<>();
@@ -95,5 +104,6 @@ public class MovieRepository {
             if(movieDetails.containsKey(movie))
                 movieDetails.remove(movie);
         }
+
     }
 }
